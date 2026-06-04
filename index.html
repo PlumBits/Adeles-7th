@@ -20,7 +20,7 @@
     --pink: #f5b8cc;
     --pearl: #f6efe0;
     --cream: #eaf7f4;
-    --cream-dim: #aacfca;
+    --cream-dim: #cbe7e2;
     --ink: #06303f;
     --panel: #0d4256;
     --panel-deep: #072c3b;
@@ -111,7 +111,7 @@
     font-weight: 700;
     letter-spacing: 0.34em;
     text-transform: uppercase;
-    color: var(--aqua);
+    color: var(--aqua-light);
     margin-bottom: 0.7rem;
   }
 
@@ -149,7 +149,7 @@
     font-weight: 700;
     letter-spacing: 0.42em;
     text-transform: uppercase;
-    color: var(--aqua);
+    color: var(--aqua-light);
     margin-top: 0.2rem;
   }
 
@@ -258,7 +258,7 @@
     font-size: 0.68rem;
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    color: var(--aqua);
+    color: var(--aqua-light);
     font-weight: 700;
     margin-bottom: 0.45rem;
   }
@@ -327,7 +327,7 @@
     font-size: 0.68rem;
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    color: var(--aqua);
+    color: var(--aqua-light);
     font-weight: 700;
     margin-bottom: 0.5rem;
   }
@@ -373,7 +373,7 @@
     font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 0.04em;
-    color: var(--aqua);
+    color: var(--aqua-light);
     cursor: pointer;
     transition: all 0.3s;
     margin-top: 0.3rem;
@@ -501,7 +501,9 @@
 
 <main>
   <div class="header">
-    <div class="crest">&#129500;&#8205;&#9792;&#65039;</div>
+    <div class="crest">
+      <img src="mermaid-tail.png" width="152" alt="Mermaid tail rising from the water" style="display:block; margin:0 auto; height:auto;">
+    </div>
     <p class="overline">You're Invited To</p>
     <h1>Adele's</h1>
     <div class="age">7<sup>th</sup></div>
@@ -554,7 +556,9 @@
     </div>
 
     <div class="success-view" id="successView">
-      <div class="seal" id="successSeal">&#129500;&#8205;&#9792;&#65039;</div>
+      <div class="seal" id="successSeal">
+        <img src="mermaid-tail.png" width="78" alt="Mermaid tail" style="display:block; margin:0 auto; height:auto;">
+      </div>
       <h3 id="successTitle">Thank You</h3>
       <p id="successText"></p>
     </div>
@@ -680,7 +684,6 @@
       sv.style.display = 'block';
 
       if (attending === 'Yes') {
-        document.getElementById('successSeal').innerHTML = '&#129500;&#8205;&#9792;&#65039;';
         document.getElementById('successTitle').textContent = 'Sea You There!';
         const guestText = guests.length > 0
           ? ` We've saved a spot for your ${guests.length} guest${guests.length > 1 ? 's' : ''}, too.`
@@ -688,7 +691,7 @@
         document.getElementById('successText').textContent =
           `Let the sea-magic begin — Adele can't wait to celebrate with you.${guestText}`;
       } else {
-        document.getElementById('successSeal').innerHTML = '&#128091;';
+        document.getElementById('successSeal').innerHTML = '<span style="font-size:3rem">&#128026;</span>';
         document.getElementById('successTitle').textContent = "We'll Miss You";
         document.getElementById('successText').textContent =
           'Thank you for letting us know, ' + name + '. You\'ll be missed at the sea cave!';
