@@ -631,8 +631,13 @@
     const guestName = document.getElementById('guestName').value.trim();
     if (attending === 'Yes' && !guestName) return showError("Please enter the guest's name.");
 
-    const payload = { attending };
-    if (attending === 'Yes') payload.guestName = guestName;
+    // Keep payload compatible with the existing Google Apps Script backend.
+    // The single guest name is submitted as `name`; no additional guests are submitted.
+    const payload = {
+      name: attending === 'Yes' ? guestName : '',
+      attending,
+      guests: []
+    };
 
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
