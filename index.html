@@ -336,8 +336,7 @@
   }
 
   /* ── Guest field ── */
-  .guests-section { display: none; margin-bottom: 1.25rem; }
-  .guests-section.show { display: block; animation: fadeUp 0.5s ease; }
+  .guests-section { display: block; margin-bottom: 1.25rem; }
   .guests-section label {
     display: block;
     font-size: 0.68rem;
@@ -523,17 +522,17 @@
     <div id="formArea">
       <div id="errorMsg" class="error-msg"></div>
 
+      <div class="guests-section" id="guestsSection">
+        <label for="guestName">Guest Name</label>
+        <input type="text" id="guestName" placeholder="Guest's full name" autocomplete="off" required>
+      </div>
+
       <div class="field">
         <label>Will You Join the Royal Court?</label>
         <div class="attendance-toggle" id="toggle">
           <button type="button" class="yes" data-val="Yes" onclick="pickAttendance(this)">Attending</button>
           <button type="button" class="no" data-val="No" onclick="pickAttendance(this)">Can't attend</button>
         </div>
-      </div>
-
-      <div class="guests-section" id="guestsSection">
-        <label for="guestName">Guest Name</label>
-        <input type="text" id="guestName" placeholder="Guest's full name" autocomplete="off">
       </div>
 
       <button class="submit-btn" id="submitBtn" onclick="submitRsvp()">Send My RSVP</button>
@@ -601,19 +600,6 @@
     document.querySelectorAll('#toggle button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     attending = btn.dataset.val;
-
-    const section = document.getElementById('guestsSection');
-    const guestNameInput = document.getElementById('guestName');
-
-    if (attending === 'Yes') {
-      section.classList.add('show');
-      guestNameInput.required = true;
-      setTimeout(() => guestNameInput.focus(), 80);
-    } else {
-      section.classList.remove('show');
-      guestNameInput.required = false;
-      guestNameInput.value = '';
-    }
   }
 
   function showError(msg) {
@@ -626,15 +612,14 @@
     const errEl = document.getElementById('errorMsg');
     errEl.style.display = 'none';
 
-    if (!attending) return showError('Please let us know if you can make it.');
-
     const guestName = document.getElementById('guestName').value.trim();
-    if (attending === 'Yes' && !guestName) return showError("Please enter the guest's name.");
+    if (!guestName) return showError("Please enter the guest's name.");
+    if (!attending) return showError('Please let us know if you can make it.');
 
     // Keep payload compatible with the existing Google Apps Script backend.
     // The single guest name is submitted as `name`; no additional guests are submitted.
     const payload = {
-      name: attending === 'Yes' ? guestName : '',
+      name: guestName,
       attending,
       guests: []
     };
@@ -663,7 +648,7 @@
         document.getElementById('successSeal').innerHTML = '<span style="font-size:3rem">&#128026;</span>';
         document.getElementById('successTitle').textContent = "We'll Miss You";
         document.getElementById('successText').textContent =
-          'Thank you for letting us know. You\'ll be missed at the sea cave!';
+          'Thank you for letting us know, ' + guestName + '. You\'ll be missed at the sea cave!';
       }
     } catch (e) {
       showError('Something went wrong. Please try again.');
